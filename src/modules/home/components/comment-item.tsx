@@ -1,30 +1,44 @@
 import { ThemedText } from '@/src/components/themed-text'
+import { ThemedView } from '@/src/components/themed-view'
+import { useThemeColor } from '@/src/hooks/use-theme-color'
 import { Comment } from '@/src/services/posts'
 import { Ionicons } from '@expo/vector-icons'
 import { memo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export const CommentItem = memo(({ item }: { item: Comment }) => {
+  const cardBackgroundColor = useThemeColor(
+    { light: undefined, dark: undefined },
+    'cardBackground'
+  )
+  const borderColor = useThemeColor(
+    { light: undefined, dark: undefined },
+    'divider'
+  )
+
   return (
-    <View style={styles.commentCard}>
-      <View style={styles.commentHeader}>
-        <View style={styles.commentIconContainer}>
+    <ThemedView
+      style={[
+        styles.commentCard,
+        { backgroundColor: cardBackgroundColor, borderColor: borderColor },
+      ]}
+    >
+      <ThemedView style={styles.commentHeader}>
+        <ThemedView style={styles.commentIconContainer}>
           <Ionicons name='mail' size={20} color='#9B59B6' />
-        </View>
-        <View style={styles.commentInfo}>
+        </ThemedView>
+        <ThemedView style={styles.commentInfo}>
           <ThemedText style={styles.commentName}>{item.name}</ThemedText>
           <ThemedText style={styles.commentEmail}>{item.email}</ThemedText>
-        </View>
-      </View>
+        </ThemedView>
+      </ThemedView>
       <ThemedText style={styles.commentBody}>{item.body}</ThemedText>
-    </View>
+    </ThemedView>
   )
 })
-CommentItem.displayName = 'CommentItem'
 
 const styles = StyleSheet.create({
   commentCard: {
-    backgroundColor: '#F5F5F5',
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
@@ -35,6 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
+    backgroundColor: 'transparent',
   },
   commentIconContainer: {
     width: 32,
@@ -47,6 +62,7 @@ const styles = StyleSheet.create({
   },
   commentInfo: {
     flex: 1,
+    backgroundColor: 'transparent',
   },
   commentName: {
     fontSize: 14,
@@ -55,12 +71,12 @@ const styles = StyleSheet.create({
   },
   commentEmail: {
     fontSize: 12,
-    color: '#666',
   },
   commentBody: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#333',
     marginLeft: 44,
   },
 })
+
+CommentItem.displayName = 'CommentItem'

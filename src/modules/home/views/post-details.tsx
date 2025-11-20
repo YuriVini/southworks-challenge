@@ -1,5 +1,6 @@
 import { ThemedText } from '@/src/components/themed-text'
 import { ThemedView } from '@/src/components/themed-view'
+import { useThemeColor } from '@/src/hooks/use-theme-color'
 import { Comment, usePostById, usePostComments } from '@/src/services/posts'
 import { Ionicons } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
@@ -10,11 +11,15 @@ import {
   ListRenderItem,
   ScrollView,
   StyleSheet,
-  View,
 } from 'react-native'
 import { CommentItem } from '../components/comment-item'
 
 export const PostDetails = () => {
+  const iconColor = useThemeColor({ light: undefined, dark: undefined }, 'icon')
+  const dividerColor = useThemeColor(
+    { light: undefined, dark: undefined },
+    'divider'
+  )
   const route = useRoute()
   const { postId } = route.params as { postId: number }
 
@@ -51,35 +56,37 @@ export const PostDetails = () => {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        <View style={styles.postSection}>
-          <View style={styles.postHeader}>
-            <View style={styles.userIconContainer}>
+        <ThemedView style={styles.postSection}>
+          <ThemedView style={styles.postHeader}>
+            <ThemedView style={styles.userIconContainer}>
               <Ionicons name='person' size={24} color='#007AFF' />
-            </View>
-            <View style={styles.userInfo}>
+            </ThemedView>
+            <ThemedView style={styles.userInfo}>
               <ThemedText style={styles.userName}>
                 User {post.userId}
               </ThemedText>
               <ThemedText style={styles.timeAgo}>2 hours ago</ThemedText>
-            </View>
-          </View>
+            </ThemedView>
+          </ThemedView>
 
-          <View style={styles.postContent}>
+          <ThemedView style={styles.postContent}>
             <ThemedText style={styles.postTitle}>{post.title}</ThemedText>
             <ThemedText style={styles.postBody}>{post.body}</ThemedText>
-          </View>
+          </ThemedView>
 
-          <View style={styles.divider} />
+          <ThemedView
+            style={[styles.divider, { backgroundColor: dividerColor }]}
+          />
 
-          <View style={styles.commentCountContainer}>
-            <Ionicons name='chatbubble-outline' size={16} color='#666' />
+          <ThemedView style={styles.commentCountContainer}>
+            <Ionicons name='chatbubble-outline' size={16} color={iconColor} />
             <ThemedText style={styles.commentCountText}>
               {comments?.length || 0} comments
             </ThemedText>
-          </View>
-        </View>
+          </ThemedView>
+        </ThemedView>
 
-        <View>
+        <ThemedView>
           {isLoadingComments ? (
             <ActivityIndicator size='small' style={styles.loader} />
           ) : (
@@ -95,7 +102,7 @@ export const PostDetails = () => {
               windowSize={5}
             />
           )}
-        </View>
+        </ThemedView>
       </ScrollView>
     </ThemedView>
   )
@@ -112,7 +119,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   postSection: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     marginBottom: 16,
   },
@@ -140,7 +146,6 @@ const styles = StyleSheet.create({
   },
   timeAgo: {
     fontSize: 12,
-    color: '#999',
   },
   postContent: {
     marginBottom: 16,
@@ -154,7 +159,6 @@ const styles = StyleSheet.create({
   postBody: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#333',
   },
   divider: {
     height: 1,
@@ -168,7 +172,6 @@ const styles = StyleSheet.create({
   },
   commentCountText: {
     fontSize: 14,
-    color: '#666',
   },
   loader: {
     marginVertical: 20,
