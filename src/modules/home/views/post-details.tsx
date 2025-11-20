@@ -49,8 +49,6 @@ export const PostDetails = () => {
     )
   }
 
-  const commentsCount = comments?.length || 0
-
   return (
     <ThemedView style={styles.container}>
       <ScrollView
@@ -80,7 +78,7 @@ export const PostDetails = () => {
           <View style={styles.commentCountContainer}>
             <Ionicons name='chatbubble-outline' size={16} color='#666' />
             <ThemedText style={styles.commentCountText}>
-              {commentsCount} comments
+              {comments?.length || 0} comments
             </ThemedText>
           </View>
         </View>

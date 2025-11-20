@@ -15,6 +15,7 @@ import {
   ListRenderItem,
   RefreshControl,
   StyleSheet,
+  View,
 } from 'react-native'
 import { PostItem } from '../components/post-item'
 import { HomeRoutes, HomeStackNavigation } from '../types'
@@ -50,6 +51,11 @@ export const Home = () => {
     [isLoading, refetchPosts]
   )
 
+  const itemSeparatorComponent = useCallback(
+    () => <View style={styles.itemSeparator} />,
+    []
+  )
+
   if (isLoading) return <ActivityIndicator />
 
   if (error) return <ThemedText>Error: {error.message}</ThemedText>
@@ -61,6 +67,7 @@ export const Home = () => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.contentContainerStyle}
+        ItemSeparatorComponent={itemSeparatorComponent}
         refreshControl={refreshControl}
         maxToRenderPerBatch={10}
         updateCellsBatchingPeriod={50}
@@ -78,6 +85,10 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingHorizontal: 16,
-    gap: 16,
+  },
+  itemSeparator: {
+    height: 1,
+    marginVertical: 16,
+    backgroundColor: '#E0E0E0',
   },
 })
