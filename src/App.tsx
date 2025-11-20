@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native'
 
 import 'react-native-reanimated'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useCallback } from 'react'
@@ -13,13 +14,14 @@ import Navigation from './navigation'
 Asset.loadAsync([...NavigationAssets, require('../assets/images/icon.png')])
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: 'white' },
 })
 
 SplashScreen.preventAutoHideAsync()
 
 const App = () => {
-  // Makes sure font is loaded before hiding the Splash Screen
+  const queryClient = new QueryClient()
+
   const onLayoutRootView = useCallback(async () => {
     await SplashScreen.hideAsync()
   }, [])
@@ -29,8 +31,10 @@ const App = () => {
       style={styles.container}
       onLayout={onLayoutRootView}
     >
-      <StatusBar style='auto' />
-      <Navigation />
+      <QueryClientProvider client={queryClient}>
+        <StatusBar style='auto' />
+        <Navigation />
+      </QueryClientProvider>
     </GestureHandlerRootView>
   )
 }
