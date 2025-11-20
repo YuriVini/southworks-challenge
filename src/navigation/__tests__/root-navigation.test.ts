@@ -1,5 +1,8 @@
 // Mock createNavigationContainerRef before importing the module
 // The factory function must define the mock inline
+// Import after mocks are set up
+import { navigate, navigationRef } from '../root-navigation'
+
 jest.mock('@react-navigation/native', () => {
   const mockRef = {
     isReady: jest.fn(),
@@ -11,9 +14,6 @@ jest.mock('@react-navigation/native', () => {
     ParamListBase: {},
   }
 })
-
-// Import after mocks are set up
-import { navigate, navigationRef } from '../root-navigation'
 
 describe('Root Navigation', () => {
   beforeEach(() => {
