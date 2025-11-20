@@ -15,7 +15,7 @@ import { CACHE_TIME } from './services/config'
 Asset.loadAsync([...NavigationAssets, require('../assets/images/icon.png')])
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'white' },
+  container: { flex: 1 },
 })
 
 SplashScreen.preventAutoHideAsync()

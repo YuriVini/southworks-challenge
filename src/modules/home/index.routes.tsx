@@ -29,6 +29,7 @@ export const HomeGroup = () => {
         name={HomeRoutes.POST_DETAILS}
         component={PostDetails}
         options={{
+          animationMatchesGesture: true,
           title: 'Post Details',
           headerShown: true,
           headerStyle: {
