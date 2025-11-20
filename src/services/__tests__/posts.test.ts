@@ -1,10 +1,10 @@
 import { QueryClient } from '@tanstack/react-query'
 import {
-  prefetchPost,
-  prefetchPostComments,
-  usePostById,
-  usePostComments,
-  usePosts,
+    prefetchPost,
+    prefetchPostComments,
+    usePostById,
+    usePostComments,
+    usePosts,
 } from '../posts'
 
 // Mock fetch globally
@@ -44,6 +44,28 @@ describe('Posts Service', () => {
         })
       )
     })
+
+    it('queryFn fetches posts from correct URL', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const mockPosts = [
+        { id: 1, title: 'Post 1', body: 'Body 1', userId: 1 },
+        { id: 2, title: 'Post 2', body: 'Body 2', userId: 2 },
+      ]
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValueOnce(mockPosts),
+      })
+
+      usePosts()
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      const result = await queryFn()
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        'https://jsonplaceholder.typicode.com/posts'
+      )
+      expect(result).toEqual(mockPosts)
+    })
   })
 
   describe('usePostById', () => {
@@ -63,6 +85,26 @@ describe('Posts Service', () => {
         })
       )
     })
+
+    it('queryFn fetches post by id from correct URL', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const postId = 1
+      const mockPost = { id: 1, title: 'Test Post', body: 'Body', userId: 1 }
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValueOnce(mockPost),
+      })
+
+      usePostById(postId)
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      const result = await queryFn()
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        'https://jsonplaceholder.typicode.com/posts/1'
+      )
+      expect(result).toEqual(mockPost)
+    })
   })
 
   describe('usePostComments', () => {
@@ -81,6 +123,34 @@ describe('Posts Service', () => {
           gcTime: 10 * 60 * 1000, // CACHE_TIME * 2
         })
       )
+    })
+
+    it('queryFn fetches comments from correct URL', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const postId = 1
+      const mockComments = [
+        {
+          id: 1,
+          postId: 1,
+          name: 'Test User',
+          email: 'test@example.com',
+          body: 'Comment body',
+        },
+      ]
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValueOnce(mockComments),
+      })
+
+      usePostComments(postId)
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      const result = await queryFn()
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        'https://jsonplaceholder.typicode.com/posts/1/comments'
+      )
+      expect(result).toEqual(mockComments)
     })
   })
 
