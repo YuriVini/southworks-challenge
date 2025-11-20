@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { NavigationContainer } from '@react-navigation/native'
 import { fireEvent, render } from '@testing-library/react-native'
 import { Text } from 'react-native'
@@ -46,6 +47,24 @@ describe('HapticTab Component', () => {
   })
 
   it('calls onPressIn when pressed down', () => {
+    require('react-native').Platform.OS = 'android'
+
+    const mockOnPressIn = jest.fn()
+    const { getByText } = renderWithNavigation(
+      <HapticTab onPressIn={mockOnPressIn}>
+        <Text>Press Me</Text>
+      </HapticTab>
+    )
+
+    const pressable = getByText('Press Me')
+    fireEvent(pressable, 'pressIn')
+
+    expect(mockOnPressIn).toHaveBeenCalledTimes(1)
+  })
+
+  it('calls onPressIn when pressed down on iOS', () => {
+    require('react-native').Platform.OS = 'ios'
+
     const mockOnPressIn = jest.fn()
     const { getByText } = renderWithNavigation(
       <HapticTab onPressIn={mockOnPressIn}>
