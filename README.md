@@ -1,50 +1,199 @@
-# Welcome to your Expo app 👋
+# Southworks Challenge - Posts Feed App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application built with Expo that displays a feed of posts with detailed views and comments. The app demonstrates modern React Native patterns including data fetching, caching, performance optimization, and navigation.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 📱 **Posts Feed**: Browse a list of posts with pull-to-refresh functionality
+- 📄 **Post Details**: View detailed post information with user information
+- 💬 **Comments**: View and toggle comments for each post
+- ⚡ **Performance Optimized**: Memoized components and optimized FlatList rendering
+- 🔄 **Smart Caching**: Intelligent cache management with prefetching
+- 🎨 **Modern UI**: Clean, themed interface with proper navigation
+
+## Tech Stack
+
+- **Framework**: React Native with Expo
+- **Navigation**: React Navigation (Native Stack)
+- **Data Fetching**: TanStack React Query (v5)
+- **Language**: TypeScript
+- **State Management**: React Query for server state
+
+## Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm, yarn, or bun package manager
+- Expo CLI (optional, but recommended)
+- iOS Simulator (for macOS) or Android Emulator
+- Or Expo Go app on your physical device
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd southworks-challenge
+   ```
+
+2. Install dependencies:
 
    ```bash
    npm install
+   # or
+   yarn install
+   # or
+   bun install
    ```
 
-2. Start the app
+## Running the App
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Start the development server
 
 ```bash
-npm run reset-project
+npm start
+# or
+yarn start
+# or
+bun start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+This will start the Expo development server and display a QR code.
 
-## Learn more
+### Run on different platforms
 
-To learn more about developing your project with Expo, look at the following resources:
+**iOS Simulator (macOS only):**
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm run ios
+# or press 'i' in the Expo CLI
+```
 
-## Join the community
+**Android Emulator:**
 
-Join our community of developers creating universal apps.
+```bash
+npm run android
+# or press 'a' in the Expo CLI
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Physical Device:**
+
+1. Install the Expo Go app from the App Store (iOS) or Google Play Store (Android)
+2. Scan the QR code displayed in the terminal or browser
+3. The app will load on your device
+
+## Testing the App
+
+### Manual Testing Steps
+
+1. **Posts Feed Screen:**
+   - Verify posts are loaded and displayed
+   - Test pull-to-refresh functionality
+   - Tap on a post to navigate to details
+
+2. **Post Details Screen:**
+   - Verify post content is displayed correctly
+   - Check user information display
+   - Test comments loading
+   - Toggle comments visibility (if implemented)
+
+3. **Performance Testing:**
+   - Scroll through the posts list rapidly
+   - Navigate between posts quickly
+   - Test with slow network connection (use network throttling in dev tools)
+
+4. **Cache Testing:**
+   - Navigate to a post, go back, and navigate to the same post again
+   - Verify instant loading (data should be cached)
+   - Test offline behavior (disable network after initial load)
+
+### Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Run tests in watch mode during development:
+
+```bash
+npm run test:watch
+```
+
+The test suite includes:
+
+- **Home Screen Tests**: Loading states, error handling, posts rendering, empty states
+- **Post Details Screen Tests**: Post loading, comment loading, data display, edge cases
+
+### Linting
+
+Run the linter to check code quality:
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```
+src/
+├── App.tsx                 # Root component with QueryClient setup
+├── components/
+│   ├── services/
+│   │   ├── config.ts      # API configuration and cache constants
+│   │   └── posts.ts       # Data fetching hooks and types
+│   ├── themed-text.tsx    # Themed text component
+│   └── themed-view.tsx    # Themed view component
+├── modules/
+│   └── home/
+│       ├── index.routes.tsx  # Navigation setup
+│       ├── types.ts          # TypeScript types
+│       └── views/
+│           ├── home.tsx      # Posts feed screen
+│           └── post-details.tsx  # Post details screen
+└── navigation/
+    └── index.tsx          # Navigation container
+```
+
+## API
+
+The app uses the [JSONPlaceholder API](https://jsonplaceholder.typicode.com) for demo data:
+
+- Posts: `GET /posts`
+- Post by ID: `GET /posts/:id`
+- Comments: `GET /posts/:id/comments`
+
+## Development Notes
+
+- The app uses TanStack React Query for data fetching and caching
+- Cache time is set to 5 minutes (configurable in `src/components/services/config.ts`)
+- Posts list has extended cache time (10 minutes) as it changes less frequently
+- Prefetching is implemented for smooth navigation experience
+- All FlatList components are optimized for performance
+
+## Troubleshooting
+
+**Metro bundler issues:**
+
+```bash
+npm start -- --reset-cache
+```
+
+**iOS Simulator not opening:**
+
+- Ensure Xcode is installed (macOS only)
+- Run `xcode-select --install` if needed
+
+**Android Emulator not found:**
+
+- Ensure Android Studio is installed
+- Start an emulator from Android Studio first
+
+**Port already in use:**
+
+- Change the port: `npm start -- --port 8082`
+
+## License
+
+This project is part of a coding challenge.
