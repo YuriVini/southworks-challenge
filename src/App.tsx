@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { CACHE_TIME } from './components/services/config'
 import Navigation from './navigation'
 
 Asset.loadAsync([...NavigationAssets, require('../assets/images/icon.png')])
@@ -19,9 +20,17 @@ const styles = StyleSheet.create({
 
 SplashScreen.preventAutoHideAsync()
 
-const App = () => {
-  const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: CACHE_TIME,
+      gcTime: CACHE_TIME * 2,
+      retry: 1,
+    },
+  },
+})
 
+const App = () => {
   const onLayoutRootView = useCallback(async () => {
     await SplashScreen.hideAsync()
   }, [])
