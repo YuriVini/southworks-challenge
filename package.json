@@ -61,8 +61,12 @@
       "!**/node_modules/**",
       "!**/babel.config.js",
       "!**/expo-env.d.ts",
-      "!**/.expo/**"
-    ]
+      "!**/.expo/**",
+      "!**/eslint.config.js",
+      "!**/jest.setup.js",
+      "!**/*/types.ts"
+    ],
+    "forceExit": true
   },
   "private": true
 }
