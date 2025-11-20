@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native'
 import { PostDetails } from '../post-details'
 
 // Mock the posts service
-jest.mock('@/src/components/services/posts', () => ({
+jest.mock('@/src/services/posts', () => ({
   usePostById: jest.fn(),
   usePostComments: jest.fn(),
 }))

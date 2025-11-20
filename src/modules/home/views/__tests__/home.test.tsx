@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native'
 import { Home } from '../home'
 
 // Mock the posts service
-jest.mock('@/src/components/services/posts', () => ({
+jest.mock('@/src/services/posts', () => ({
   usePosts: jest.fn(),
   prefetchPost: jest.fn(),
   prefetchPostComments: jest.fn(),
