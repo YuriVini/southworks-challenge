@@ -1,7 +1,12 @@
 import * as postsService from '@/src/services/posts'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react-native'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native'
 import { ActivityIndicator } from 'react-native'
 import { Home } from '../home'
 
@@ -88,6 +93,7 @@ describe('Home Screen', () => {
     await waitFor(() => {
       expect(screen.getByText('Test Post 1')).toBeTruthy()
       expect(screen.getByText('Test Post 2')).toBeTruthy()
+      fireEvent.press(screen.getByText('Test Post 1'))
     })
   })
 

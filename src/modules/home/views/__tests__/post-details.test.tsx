@@ -85,6 +85,20 @@ describe('PostDetails Screen', () => {
     expect(UNSAFE_getByType(ActivityIndicator)).toBeTruthy()
   })
 
+  it('renders loading indicator when comments are loading', () => {
+    ;(postsService.usePostById as jest.Mock).mockReturnValue({
+      data: mockPost,
+      isLoading: false,
+    })
+    ;(postsService.usePostComments as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+    })
+
+    const { UNSAFE_getByType } = renderWithProviders(<PostDetails />)
+    expect(UNSAFE_getByType(ActivityIndicator)).toBeTruthy()
+  })
+
   it('renders post not found message when post is null', () => {
     ;(postsService.usePostById as jest.Mock).mockReturnValue({
       data: null,
