@@ -9,8 +9,8 @@ import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { CACHE_TIME } from './components/services/config'
 import Navigation from './navigation'
+import { CACHE_TIME } from './services/config'
 
 Asset.loadAsync([...NavigationAssets, require('../assets/images/icon.png')])
 

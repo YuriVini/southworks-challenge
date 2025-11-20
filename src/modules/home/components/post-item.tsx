@@ -1,8 +1,8 @@
 import { HapticTab } from '@/src/components/haptic-tab'
-import { Post } from '@/src/components/services/posts'
 import { ThemedText } from '@/src/components/themed-text'
 import { ThemedView } from '@/src/components/themed-view'
 import { IconSymbol } from '@/src/components/ui/icon-symbol.ios'
+import { Post } from '@/src/services/posts'
 import { memo } from 'react'
 import { StyleSheet } from 'react-native'
 

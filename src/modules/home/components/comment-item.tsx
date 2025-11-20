@@ -1,5 +1,5 @@
-import { Comment } from '@/src/components/services/posts'
 import { ThemedText } from '@/src/components/themed-text'
+import { Comment } from '@/src/services/posts'
 import { Ionicons } from '@expo/vector-icons'
 import { memo } from 'react'
 import { StyleSheet, View } from 'react-native'

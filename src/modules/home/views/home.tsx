@@ -1,11 +1,11 @@
+import { ThemedText } from '@/src/components/themed-text'
+import { ThemedView } from '@/src/components/themed-view'
 import {
   Post,
   prefetchPost,
   prefetchPostComments,
   usePosts,
-} from '@/src/components/services/posts'
-import { ThemedText } from '@/src/components/themed-text'
-import { ThemedView } from '@/src/components/themed-view'
+} from '@/src/services/posts'
 import { useNavigation } from '@react-navigation/native'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo } from 'react'

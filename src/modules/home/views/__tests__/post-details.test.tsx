@@ -1,4 +1,4 @@
-import * as postsService from '@/src/components/services/posts'
+import * as postsService from '@/src/services/posts'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, waitFor } from '@testing-library/react-native'

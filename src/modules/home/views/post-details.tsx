@@ -1,10 +1,6 @@
-import {
-  Comment,
-  usePostById,
-  usePostComments,
-} from '@/src/components/services/posts'
 import { ThemedText } from '@/src/components/themed-text'
 import { ThemedView } from '@/src/components/themed-view'
+import { Comment, usePostById, usePostComments } from '@/src/services/posts'
 import { Ionicons } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
 import { useCallback } from 'react'
