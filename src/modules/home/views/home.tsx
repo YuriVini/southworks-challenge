@@ -11,12 +11,12 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo } from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   ListRenderItem,
   RefreshControl,
   StyleSheet,
   View,
 } from 'react-native'
+import Animated, { FadeIn, SlideInLeft } from 'react-native-reanimated'
 import { PostItem } from '../components/post-item'
 import { HomeRoutes, HomeStackNavigation } from '../types'
 
@@ -38,8 +38,10 @@ export const Home = () => {
   )
 
   const renderItem: ListRenderItem<Post> = useCallback(
-    ({ item }) => (
-      <PostItem key={item.id} item={item} onPress={handlePostPress} />
+    ({ item, index }) => (
+      <Animated.View entering={SlideInLeft.delay(index * 50).duration(800)}>
+        <PostItem key={item.id} item={item} onPress={handlePostPress} />
+      </Animated.View>
     ),
     [handlePostPress]
   )
@@ -56,14 +58,20 @@ export const Home = () => {
     []
   )
 
-  if (isLoading) return <ActivityIndicator />
+  if (isLoading)
+    return (
+      <ThemedView style={styles.container}>
+        <ActivityIndicator />
+      </ThemedView>
+    )
 
   if (error) return <ThemedText>Error: {error.message}</ThemedText>
 
   return (
     <ThemedView style={styles.container}>
-      <FlatList
+      <Animated.FlatList
         data={posts}
+        entering={FadeIn}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={styles.contentContainerStyle}

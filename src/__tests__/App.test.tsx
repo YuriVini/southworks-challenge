@@ -109,7 +109,6 @@ describe('App', () => {
     const gestureHandler = UNSAFE_getByType('GestureHandlerRootView')
     expect(gestureHandler.props.style).toEqual({
       flex: 1,
-      backgroundColor: 'white',
     })
   })
 })
