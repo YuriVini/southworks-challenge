@@ -42,6 +42,7 @@ export function IconSymbol({
 }) {
   return (
     <MaterialIcons
+      testID={`material-icons-${name}`}
       color={color}
       size={size}
       name={MAPPING[name]}

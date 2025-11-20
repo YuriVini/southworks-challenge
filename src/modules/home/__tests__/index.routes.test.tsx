@@ -59,4 +59,3 @@ describe('HomeGroup Routes', () => {
     expect(toJSON()).toBeTruthy()
   })
 })
-
