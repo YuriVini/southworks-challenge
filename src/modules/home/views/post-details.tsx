@@ -12,6 +12,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native'
+import Animated, { SlideInRight } from 'react-native-reanimated'
 import { CommentItem } from '../components/comment-item'
 
 export const PostDetails = () => {
@@ -28,7 +29,11 @@ export const PostDetails = () => {
     usePostComments(postId)
 
   const renderItem: ListRenderItem<Comment> = useCallback(
-    ({ item }) => <CommentItem key={item.id} item={item} />,
+    ({ item, index }) => (
+      <Animated.View entering={SlideInRight.delay(index * 50).duration(800)}>
+        <CommentItem key={item.id} item={item} />
+      </Animated.View>
+    ),
     []
   )
 
