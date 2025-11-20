@@ -6,8 +6,12 @@ const Stack = createNativeStackNavigator<HomeStackParamList>()
 
 export const HomeGroup = () => {
   return (
-    <Stack.Group>
-      <Stack.Screen name={HomeRoutes.HOME} component={Home} />
-    </Stack.Group>
+    <Stack.Navigator>
+      <Stack.Screen
+        name={HomeRoutes.HOME}
+        component={Home}
+        options={{ title: 'Feed', headerShown: true }}
+      />
+    </Stack.Navigator>
   )
 }
