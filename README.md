@@ -4,7 +4,7 @@ A React Native mobile application built with Expo that displays a feed of posts 
 
 # Demo
 
-<video src="DEMO.mp4" controls width="200" height="400"></video>
+<video src="./DEMO.mp4" controls width="200" height="400"></video>
 
 ## Features
 
