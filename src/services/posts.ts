@@ -1,4 +1,5 @@
 import { QueryClient, useQuery } from '@tanstack/react-query'
+import { Alert } from 'react-native'
 import { CACHE_TIME, URL_BASE } from './config'
 
 export interface Post {
@@ -19,7 +20,10 @@ export interface Comment {
 export const usePosts = () => {
   return useQuery<Post[], Error | null>({
     queryKey: ['posts'],
-    queryFn: () => fetch(`${URL_BASE}/posts`).then((res) => res.json()),
+    queryFn: () => fetch(`${URL_BASE}/posts`).then((res) => res.json()).catch((err) => {
+      Alert.alert('Something went wrong', 'Please try again later')
+      throw err
+    }),
     staleTime: CACHE_TIME * 2,
     gcTime: CACHE_TIME * 2,
   })
@@ -29,7 +33,10 @@ export const usePostById = (postId: number) => {
   return useQuery<Post, Error | null>({
     queryKey: ['post', postId],
     queryFn: () =>
-      fetch(`${URL_BASE}/posts/${postId}`).then((res) => res.json()),
+      fetch(`${URL_BASE}/posts/${postId}`).then((res) => res.json()).catch((err) => {
+        Alert.alert('Something went wrong', 'Please try again later')
+        throw err
+      }),
 
     staleTime: CACHE_TIME, 
     gcTime: CACHE_TIME * 2,
