@@ -2,6 +2,7 @@ import { HapticTab } from '@/src/components/haptic-tab'
 import { ThemedText } from '@/src/components/themed-text'
 import { ThemedView } from '@/src/components/themed-view'
 import { IconSymbol } from '@/src/components/ui/icon-symbol.ios'
+import { Colors } from '@/src/constants/theme'
 import { Post } from '@/src/services/posts'
 import { memo } from 'react'
 import { StyleSheet } from 'react-native'
@@ -16,7 +17,11 @@ export const PostItem = memo(
       <HapticTab onPress={handlePress}>
         <ThemedView style={styles.container}>
           <ThemedText style={styles.title}>{item?.title}</ThemedText>
-          <IconSymbol name='chevron.forward' size={16} color='#007AFF' />
+          <IconSymbol
+            name='chevron.forward'
+            size={16}
+            color={Colors.light.primary}
+          />
         </ThemedView>
         <ThemedText numberOfLines={2} ellipsizeMode='tail' style={styles.body}>
           {item?.body}

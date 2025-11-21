@@ -1,5 +1,6 @@
 import { ThemedText } from '@/src/components/themed-text'
 import { ThemedView } from '@/src/components/themed-view'
+import { Colors } from '@/src/constants/theme'
 import { useThemeColor } from '@/src/hooks/use-theme-color'
 import { Comment, usePostById, usePostComments } from '@/src/services/posts'
 import { Ionicons } from '@expo/vector-icons'
@@ -64,7 +65,7 @@ export const PostDetails = () => {
         <ThemedView style={styles.postSection}>
           <ThemedView style={styles.postHeader}>
             <ThemedView style={styles.userIconContainer}>
-              <Ionicons name='person' size={24} color='#007AFF' />
+              <Ionicons name='person' size={24} color={Colors.light.primary} />
             </ThemedView>
             <ThemedView style={styles.userInfo}>
               <ThemedText style={styles.userName}>
