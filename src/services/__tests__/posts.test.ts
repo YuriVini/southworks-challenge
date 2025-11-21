@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { QueryClient } from '@tanstack/react-query'
+import { Alert } from 'react-native'
 import {
   prefetchPost,
   prefetchPostComments,
@@ -10,6 +11,13 @@ import {
 
 // Mock fetch globally
 global.fetch = jest.fn()
+
+// Mock Alert
+jest.mock('react-native', () => ({
+  Alert: {
+    alert: jest.fn(),
+  },
+}))
 
 // Mock useQuery
 jest.mock('@tanstack/react-query', () => ({
@@ -27,6 +35,7 @@ describe('Posts Service', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     ;(global.fetch as jest.Mock).mockClear()
+    ;(Alert.alert as jest.Mock).mockClear()
   })
 
   describe('usePosts', () => {
@@ -67,6 +76,40 @@ describe('Posts Service', () => {
       )
       expect(result).toEqual(mockPosts)
     })
+
+    it('queryFn handles fetch errors and shows alert', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const mockError = new Error('Network error')
+      ;(global.fetch as jest.Mock).mockRejectedValueOnce(mockError)
+
+      usePosts()
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      await expect(queryFn()).rejects.toThrow('Network error')
+      expect(Alert.alert).toHaveBeenCalledWith(
+        'Something went wrong',
+        'Please try again later'
+      )
+    })
+
+    it('queryFn handles json parsing errors and shows alert', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const mockError = new Error('Invalid JSON')
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockRejectedValueOnce(mockError),
+      })
+
+      usePosts()
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      await expect(queryFn()).rejects.toThrow('Invalid JSON')
+      expect(Alert.alert).toHaveBeenCalledWith(
+        'Something went wrong',
+        'Please try again later'
+      )
+    })
   })
 
   describe('usePostById', () => {
@@ -105,6 +148,42 @@ describe('Posts Service', () => {
         'https://jsonplaceholder.typicode.com/posts/1'
       )
       expect(result).toEqual(mockPost)
+    })
+
+    it('queryFn handles fetch errors and shows alert', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const postId = 1
+      const mockError = new Error('Network error')
+      ;(global.fetch as jest.Mock).mockRejectedValueOnce(mockError)
+
+      usePostById(postId)
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      await expect(queryFn()).rejects.toThrow('Network error')
+      expect(Alert.alert).toHaveBeenCalledWith(
+        'Something went wrong',
+        'Please try again later'
+      )
+    })
+
+    it('queryFn handles json parsing errors and shows alert', async () => {
+      const { useQuery } = require('@tanstack/react-query')
+      const postId = 1
+      const mockError = new Error('Invalid JSON')
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockRejectedValueOnce(mockError),
+      })
+
+      usePostById(postId)
+      const callArgs = (useQuery as jest.Mock).mock.calls[0][0]
+      const queryFn = callArgs.queryFn
+
+      await expect(queryFn()).rejects.toThrow('Invalid JSON')
+      expect(Alert.alert).toHaveBeenCalledWith(
+        'Something went wrong',
+        'Please try again later'
+      )
     })
   })
 
