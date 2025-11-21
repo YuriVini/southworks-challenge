@@ -136,24 +136,38 @@ npm run lint
 
 ## Project Structure
 
-```
+```text
 src/
 ├── App.tsx                 # Root component with QueryClient setup
 ├── components/
-│   ├── services/
-│   │   ├── config.ts      # API configuration and cache constants
-│   │   └── posts.ts       # Data fetching hooks and types
+│   ├── ui/
+│   │   ├── icon-symbol.tsx       # Icon component
+│   │   └── icon-symbol.ios.tsx  # iOS-specific icon component
+│   ├── haptic-tab.tsx      # Haptic feedback tab component
 │   ├── themed-text.tsx    # Themed text component
 │   └── themed-view.tsx    # Themed view component
+├── constants/
+│   └── theme.ts           # Theme configuration
+├── hooks/
+│   ├── use-color-scheme.ts  # Color scheme hook
+│   └── use-theme-color.ts   # Theme color hook
 ├── modules/
 │   └── home/
-│       ├── index.routes.tsx  # Navigation setup
-│       ├── types.ts          # TypeScript types
+│       ├── components/
+│       │   ├── comment-item.tsx  # Comment list item component
+│       │   └── post-item.tsx     # Post list item component
+│       ├── index.routes.tsx      # Navigation setup
+│       ├── types.ts              # TypeScript types
 │       └── views/
-│           ├── home.tsx      # Posts feed screen
+│           ├── home.tsx          # Posts feed screen
 │           └── post-details.tsx  # Post details screen
-└── navigation/
-    └── index.tsx          # Navigation container
+├── navigation/
+│   ├── consts.ts          # Navigation constants
+│   ├── index.tsx          # Navigation container
+│   └── root-navigation.ts # Root navigation configuration
+└── services/
+    ├── config.ts          # API configuration and cache constants
+    └── posts.ts           # Data fetching hooks and types
 ```
 
 ## API
@@ -167,7 +181,7 @@ The app uses the [JSONPlaceholder API](https://jsonplaceholder.typicode.com) for
 ## Development Notes
 
 - The app uses TanStack React Query for data fetching and caching
-- Cache time is set to 5 minutes (configurable in `src/components/services/config.ts`)
+- Cache time is set to 5 minutes (configurable in `src/services/config.ts`)
 - Posts list has extended cache time (10 minutes) as it changes less frequently
 - Prefetching is implemented for smooth navigation experience
 - All FlatList components are optimized for performance

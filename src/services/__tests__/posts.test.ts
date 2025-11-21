@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { QueryClient } from '@tanstack/react-query'
 import {
-    prefetchPost,
-    prefetchPostComments,
-    usePostById,
-    usePostComments,
-    usePosts,
+  prefetchPost,
+  prefetchPostComments,
+  usePostById,
+  usePostComments,
+  usePosts,
 } from '../posts'
 
 // Mock fetch globally
